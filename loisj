@@ -1,0 +1,34 @@
+import subprocess
+
+def run_git_command(command):
+    """
+    Runs a Git command and prints the output.
+    """
+    try:
+        result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e.stderr}")
+
+if __name__ == "__main__":
+    print("Git Helper Script")
+    print("1. Initialize a new Git repository")
+    print("2. Add all files to staging")
+    print("3. Commit changes")
+    print("4. Push to remote repository")
+    choice = input("Choose an option (1-4): ")
+
+    if choice == "1":
+        run_git_command("git init")
+    elif choice == "2":
+        run_git_command("git add .")
+    elif choice == "3":
+        commit_message = input("Enter commit message: ")
+        run_git_command(f'git commit -m "{commit_message}"')
+    elif choice == "4":
+        remote = input("Enter remote repository URL: ")
+        branch = input("Enter branch name: ")
+        run_git_command(f"git remote add origin {remote}")
+        run_git_command(f"git push -u origin {branch}")
+    else:
+        print("Invalid choice!")
