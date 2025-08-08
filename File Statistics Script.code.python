@@ -1,0 +1,27 @@
+import os
+
+def get_directory_stats(directory):
+    """
+    Get the total number of files and their combined size in the given directory.
+    """
+    total_files = 0
+    total_size = 0
+
+    for root, dirs, files in os.walk(directory):
+        total_files += len(files)
+        for file in files:
+            file_path = os.path.join(root, file)
+            total_size += os.path.getsize(file_path)
+
+    return total_files, total_size
+
+if __name__ == "__main__":
+    # Specify the directory to analyze
+    directory = input("Enter the directory path: ")
+
+    if os.path.exists(directory):
+        files, size = get_directory_stats(directory)
+        print(f"Total files: {files}")
+        print(f"Total size: {size / (1024 * 1024):.2f} MB")
+    else:
+        print("The specified directory does not exist!")
